@@ -47,3 +47,17 @@ module "ecr" {
   environment  = var.environment
   repositories = ["cart", "orders", "users"]
 }
+module "eks" {
+source = "./modules/eks"
+project_name = var.project_name
+environment = var.environment
+cluster_version = var.eks_cluster_version
+vpc_id = module.vpc.vpc_id
+private_subnets = module.vpc.private_subnet_ids
+node_instance_type = var.eks_node_instance_type
+node_desired = var.eks_node_desired
+node_min = var.eks_node_min
+node_max = var.eks_node_max
+
+depends_on = [module.vpc]
+}
